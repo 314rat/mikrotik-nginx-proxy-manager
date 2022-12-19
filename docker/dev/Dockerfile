@@ -11,6 +11,10 @@ RUN echo "fs.file-max = 65535" > /etc/sysctl.conf \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
+# Enable Google’s TCP BBR
+RUN echo "net.core.default_qdisc = fq" >> /etc/sysctl.conf
+RUN echo "net.ipv4.tcp_congestion_control = bbr" >> /etc/sysctl.conf
+
 # Task
 RUN cd /usr \
 	&& curl -sL https://taskfile.dev/install.sh | sh \
